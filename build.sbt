@@ -26,16 +26,12 @@ lazy val pprint = _root_.sbtcrossproject.CrossPlugin.autoImport
   .crossProject(JSPlatform, JVMPlatform, NativePlatform)
   .settings(
     baseSettings,
-    scalacOptions ++= Seq(scalaBinaryVersion.value match {
-      case x if x.startsWith("2.12") => "-target:jvm-1.8"
-      case _ => "-target:jvm-1.7"
-    }),
     libraryDependencies ++= Seq(
-      "com.lihaoyi" %%% "fansi" % "0.2.6",
+      "com.lihaoyi" %%% "fansi" % "0.2.7",
       "org.scala-lang" % "scala-reflect" % scalaVersion.value % Provided,
       "org.scala-lang" % "scala-compiler" % scalaVersion.value % Provided,
-      "com.lihaoyi" %%% "sourcecode" % "0.1.5",
-      "com.lihaoyi" %%% "utest" % "0.6.6" % Test
+      "com.lihaoyi" %%% "sourcecode" % "0.1.8",
+      "com.lihaoyi" %%% "utest" % "0.6.9" % Test
     ),
 
     unmanagedSourceDirectories in Compile ++= {
