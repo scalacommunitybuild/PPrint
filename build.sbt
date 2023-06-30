@@ -27,31 +27,26 @@ lazy val pprint = _root_.sbtcrossproject.CrossPlugin.autoImport
   .settings(
     baseSettings,
     libraryDependencies ++= Seq(
-      "com.lihaoyi" %%% "fansi" % "0.2.7",
+      "com.lihaoyi" %%% "fansi" % "0.4.0",
       "org.scala-lang" % "scala-reflect" % scalaVersion.value % Provided,
       "org.scala-lang" % "scala-compiler" % scalaVersion.value % Provided,
-      "com.lihaoyi" %%% "sourcecode" % "0.1.8",
-      "com.lihaoyi" %%% "utest" % "0.6.9" % Test
+      "com.lihaoyi" %%% "sourcecode" % "0.3.0",
+      "com.lihaoyi" %%% "utest" % "0.8.0" % Test
     ),
 
-    unmanagedSourceDirectories in Compile ++= {
-      CrossVersion.partialVersion(scalaBinaryVersion.value) match {
-        case Some((2, n)) if n >= 11 =>
-          Seq(baseDirectory.value / ".." / "shared" / "src" / "main" / "scala-2.10+")
-        case _ =>
-          Nil
-      }
-    } ,
-    unmanagedSourceDirectories in Test ++= {
-      CrossVersion.partialVersion(scalaBinaryVersion.value) match {
-        case Some((2, n)) if n >= 11 =>
-          Seq(baseDirectory.value / ".." / "shared" / "src" / "test" / "scala-2.10+")
-        case _ =>
-          Nil
-      }
-    },
-    sourceGenerators in Compile += Def.task {
-      val dir = (sourceManaged in Compile).value
+     Compile / unmanagedSourceDirectories ++= Seq(
+       baseDirectory.value / ".." / "src",
+       baseDirectory.value / ".." / "src-2",
+       baseDirectory.value / ".." / "src-2.13",
+     ),
+    Test / unmanagedSourceDirectories ++= Seq(
+      baseDirectory.value / ".." / "test" / "src",
+      baseDirectory.value / ".." / "test" / "src-2",
+      baseDirectory.value / ".." / "test" / "src-2.13",
+      baseDirectory.value / ".." / "test" / "src-jvm",
+    ),
+    Compile / sourceGenerators += Def.task {
+      val dir = (Compile / sourceManaged).value
       val file = dir/"pprint"/"TPrintGen.scala"
 
       val typeGen = for(i <- 2 to 22) yield {
@@ -90,12 +85,3 @@ lazy val pprint = _root_.sbtcrossproject.CrossPlugin.autoImport
 lazy val pprintJVM = pprint.jvm
 lazy val pprintJS = pprint.js
 lazy val pprintNative = pprint.native
-lazy val readme = scalatex.ScalatexReadme(
-  projectId = "readme",
-  wd = file(""),
-  url = "https://github.com/lihaoyi/pprint/tree/master",
-  source = "Readme"
-).settings(
-  scalaVersion := "2.11.12",
-  (unmanagedSources in Compile) += baseDirectory.value/".."/"project"/"Constants.scala"
-)
