@@ -23,7 +23,7 @@
   ga('send', 'pageview');
 
 
-@sect{PPrint}
+@sect{PPrint @pprint.Constants.version}
   @img(
     src := "Example.png",
     alt := "Example use case of PPrint",
@@ -55,13 +55,16 @@
 
   @sect{Getting Started}
     @p
-      Add the following to your SBT config:
+      Add the following to your build config:
     @hl.scala
+      // SBT
       libraryDependencies += "com.lihaoyi" %% "pprint" % "@pprint.Constants.version"
-    @p
-      Or for Scala.js/Scala-Native:
-    @hl.scala
-      libraryDependencies += "com.lihaoyi" %%% "pprint" % "@pprint.Constants.version"
+      libraryDependencies += "com.lihaoyi" %%% "pprint" % "@pprint.Constants.version" // Scala.js/Native
+
+      // Mill
+      ivy"com.lihaoyi::pprint:@pprint.Constants.version"
+      ivy"com.lihaoyi::pprint::@pprint.Constants.version" // Scala.js/Native
+
     @p
       The above example then showed how to use the default pprint configuration. You can also set up your own custom implicit `pprint.Config` if you want to control e.g. colors, width, or max-height of the output.
     @p
@@ -211,7 +214,7 @@
       used for highlighting, as well as passing in @code{additionalHandlers} to
       customize pretty-printing of various types.
 
-    @h1.scala
+    @hl.scala
 
       scala> pprint.pprintln(Math.PI) 
       3.141592653589793
@@ -255,6 +258,43 @@
       display.block
     )
   @sect{Version History}
+    @sect{0.7.3}
+      @ul
+        @li
+          Add support for Polytypes @lnk("#79", "https://github.com/com-lihaoyi/PPrint/pull/79")
+    @sect{0.7.2}
+      @ul
+        @li
+          Support Scala Native on Scala 3 @lnk("#75", "https://github.com/com-lihaoyi/PPrint/pull/77")
+    @sect{0.7.1}
+      @ul
+        @li
+          Fixes for pprinting and tprinting literal constants @lnk("#75", "https://github.com/com-lihaoyi/PPrint/pull/75")
+    @sect{0.7.0}
+      @ul
+        @li
+          Overhaul and simplify TPrint implementation @lnk("#72", "https://github.com/com-lihaoyi/PPrint/pull/72")
+        @li
+          Fix PPrint for Product2 @lnk("#36", "https://github.com/com-lihaoyi/PPrint/pull/36")
+        @li
+          Make PPrint robust against @code{toString} returning @code{null} @lnk("#70", "https://github.com/com-lihaoyi/PPrint/pull/70")
+        @li
+          Add flag to control unicode escaping @lnk("#71", "https://github.com/com-lihaoyi/PPrint/pull/71")
+    @sect{0.6.0}
+      @ul
+        @li
+          Add support for field names when printing case classes in Scala 2.13
+
+    @sect{0.5.6}
+      @ul
+        @li
+          Make `pprint.log` use `sourcecode.FileName` instead of `sourcecode.Enclosing`
+          to reduce verbosity of logging
+    @sect{0.5.5}
+      @ul
+        @li
+          Support for Scala 2.13.0 final
+
     @sect{0.5.3}
       @ul
         @li

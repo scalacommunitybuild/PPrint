@@ -1,4 +1,4 @@
-PPrint [![Gitter Chat][gitter-badge]][gitter-link] [![Build Status][travis-badge]][travis-link]
+PPrint [![Gitter Chat][gitter-badge]][gitter-link]
 ===============================================================================================
 
 [travis-badge]: https://travis-ci.org/lihaoyi/PPrint.svg
@@ -9,4 +9,4 @@ PPrint [![Gitter Chat][gitter-badge]][gitter-link] [![Build Status][travis-badge
 
 *A Scala library to pretty-print values and types*
 
-[Documentation](https://lihaoyi.github.io/PPrint/)
+[Documentation](https://com-lihaoyi.github.io/PPrint/)
